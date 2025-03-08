@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: notification-service
+
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:29092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+notification:
+  kafka:
+    topics:
+      email: email-notifications
+      sms: sms-notifications
+      push: push-notifications
+  default-sender:
+    email: notification-system@example.com
+    sms: NOTIF-SYS
+
+logging:
+  level:
+    com.example.notification: INFO
+    org.springframework.kafka: INFO
+
+# Dev profile
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+# Production profile
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
